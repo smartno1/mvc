@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 상위 내용은 검색으로 찾아서 넣음. 구글링: how to make xml -->
+
+<!-- namespace 에 사용할 인터페이스 경로를 명시 -->
+<mapper namespace="com.spring.mvc.score.repository.ScoreMapper">
+
+    <!-- id 에는 추상메서드 이름 적기 -->
+
+    <!-- 점수 저장 기능 -->
+    <insert id="save">
+        INSERT INTO score
+            (stu_name, kor, eng, math, total, average, grade) <!-- DB 컬럼명 -->
+        VALUES   <!-- 변하는 값은 #{} -->
+            (#{name}, #{kor}, #{eng}, #{math}, #{total}, #{average}, #{grade})  <!-- 자바 필드명 -->
+    </insert>
+
+    <!-- sql 과 java 의 이름 관례 차이에서 나오는 문제를 보정 -->
+    <resultMap id="scoreMap" type="com.spring.mvc.score.domain.Score">
+        <!-- column: db 에서 작성한 이름   //  property: java 에서 작성한 이름 -->
+        <result column="stu_num" property="stuNum" />
+        <result column="stu_name" property="name" />
+    </resultMap>
+
+    <!-- 전체 점수 정보 조회 -->
+    <select id="findAll" resultMap="scoreMap">
+        SELECT
+            stu_num, stu_name, kor, eng, math, total, average, grade
+        FROM score
+    </select>
+
+    <!-- 개별 점수 조회 -->
+    <select id="findOne" resultMap="scoreMap">
+        SELECT
+        stu_num, stu_name, kor, eng, math, total, average, grade
+        FROM score
+        WHERE stu_num = #{stuNum}   <!-- #{} 안에 값은 인터페이스의 매개변수가 int, str 등 기본형이면 매개변수이름 그대로 -->
+                                                            <!-- 매개변수가 커스텀형이면 그 안의 필드명을 -->
+    </select>
+
+    <!-- 점수 삭제 -->
+    <delete id="remove">
+        DELETE FROM score
+        WHERE stu_num = #{stuNum}
+        <!-- DROP TABLE, TRUNCATE TABLE : 복구불가, DELETE FROM: 롤백가능 -->
+    </delete>
+
+</mapper>
