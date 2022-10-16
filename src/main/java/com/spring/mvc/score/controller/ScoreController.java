@@ -2,6 +2,7 @@ package com.spring.mvc.score.controller;
 
 
 import com.spring.mvc.score.domain.Score;
+import com.spring.mvc.score.repository.ScoreMapper;
 import com.spring.mvc.score.repository.ScoreRepository;
 import com.spring.mvc.score.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor    // final 필드들만 초기화 생성자를 만듬.
 //@AllArgsConstructor // 모든 필드들 초기화 생성자를 만듬
 public class ScoreController {
-    private final ScoreRepository repository; // 생성자 주입을 사용하고 나중에 세터로 바꾸지 못하게 final 을 해주면 객체 만들어지면서 주입된것이 불변. => 안정적.
+//    private final ScoreRepository repository; // 생성자 주입을 사용하고 나중에 세터로 바꾸지 못하게 final 을 해주면 객체 만들어지면서 주입된것이 불변. => 안정적.
                                                 // 의존성 주입 : 생성자주입, 세터주입, 필드주입
+private final ScoreMapper repository;   // 레포지토리를 DB 로 변경.
     private final ScoreService service;
 
 //    public ScoreController(ScoreRepository repository) {    // 생성자엔 자동으로 @Autowired 를 붙여줌.

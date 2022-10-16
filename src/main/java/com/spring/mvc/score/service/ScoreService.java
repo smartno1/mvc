@@ -1,6 +1,7 @@
 package com.spring.mvc.score.service;
 
 import com.spring.mvc.score.domain.Score;
+import com.spring.mvc.score.repository.ScoreMapper;
 import com.spring.mvc.score.repository.ScoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ import java.util.List;
 @Service    // 빈 등록 : Service 라고 빈 등록.
 public class ScoreService {
 
-    private final ScoreRepository repository;
+//    private final ScoreRepository repository;
+    private final ScoreMapper repository;   // 레포지토리를 DB 로 변경.
 
     // 전체목록 조회시 중간처리
     public List<Score> findAllService(String sort) {
