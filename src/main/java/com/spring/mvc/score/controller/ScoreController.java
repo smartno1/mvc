@@ -2,7 +2,6 @@ package com.spring.mvc.score.controller;
 
 
 import com.spring.mvc.score.domain.Score;
-import com.spring.mvc.score.repository.ScoreMemoryRepo;
 import com.spring.mvc.score.repository.ScoreRepository;
 import com.spring.mvc.score.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,7 +22,7 @@ import java.util.List;
 public class ScoreController {
     private final ScoreRepository repository; // 생성자 주입을 사용하고 나중에 세터로 바꾸지 못하게 final 을 해주면 객체 만들어지면서 주입된것이 불변. => 안정적.
                                                 // 의존성 주입 : 생성자주입, 세터주입, 필드주입
-
+    private final ScoreService service;
 
 //    public ScoreController(ScoreRepository repository) {    // 생성자엔 자동으로 @Autowired 를 붙여줌.
 //        this.repository = repository;                         // 따라서 위의 리콰이어아그컨스트럭터를 해주면 끝.
@@ -37,7 +35,7 @@ public class ScoreController {
             , Model model) {
         log.info("/score/list GET 요청!! - param1 : {}", sort);
 
-        List<Score> scoreList = ScoreService.findAllService(sort);
+        List<Score> scoreList = service.findAllService(sort);
         model.addAttribute("scores", scoreList);
 
         // /WEB-INF/score/list.jsp 포워딩해서 열어주는 코드
